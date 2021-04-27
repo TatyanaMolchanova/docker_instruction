@@ -1,0 +1,185 @@
+1. docker desktop - in google 
+2. Install programm
+3. Open terminal 
+4. Enter in terminal:
+5: docker images
+//lists all running containers:
+6. docker ps
+//lists all containers:
+6. docker ps -a
+// watch containers
+7. // create docker image:
+8. docker build -t linked-list .
+9. Create Dockerfile and fill it
+10. CMD - через SHALL BIN SSH, ENTRYPOINT без оболочки
+11. docker run test 
+// get node from doker
+12. docker pull node:12
+// give our name to running docker:
+14. docker run --name hello testjs
+// remove, delete container:
+15. docker rm 643501b615a7
+15. docker rm hello14
+// multiple deletion of containers:
+1. get id's of all containers:
+docker ps -a -q
+2. delete:
+docker rm $(docker ps - qa)
+все.
+//16. запуск контейнера в фоне - параметр -d:
+docker run --name test-console -d console
+// если по команде docker ps написано статус Up, то он работает
+// stop container:
+docker stop test-console
+// remove container:
+// чтобы контейнер сам удалился после того, как отработает или будет остановлен:
+//надо добавить в команду run параметр --rm
+docker run --name hello -d --rm  test-console
+
+Important:
+1)  docker build -t linked-list .
+2) docker run --name hello testjs
+
+17. Install express library:
+npm install express
+
+Также можно прописать все библиотеки и зависимости в зависимости в package.json,
+а затем их все установить за один раз сделав npm Install
+
+0.0.0.0 адрес доступен по локалхосту и любому другому адресу из докера:
+https://stackoverflow.com/questions/67158787/page-http-0-0-0-08080-is-not-accessible-with-node-js/67160025#67160025
+
+Эта команда после того, как остановится, удалит этот имейдж и переименует его:
+docker run --rm --name web web-hello
+
+18. Запускаем теперь докер с портом внешним:
+1. docker build -t hello-world .
+2. docker run --rm --name web -p 8080:8080 hello-world
+
+19. Указываем часовой пояс для image без переменной окружения, а через команду
+-e TZ=Europe/Moscow:
+1. docker build -t new .
+2. docker run --rm --name new3 -p 8080:8080 -e TZ=Europe/Moscow new
+
+20. Монтируем папку к докеру - указываем параметр
+-v абсолютный путь к папке, в которой вносятся изменения, на хостовой машине:
+абсолютный путь к папке внутри контейнера, с докером (этот метод не работает у меня):
+1. docker build -t new .
+2. docker run --rm --name new3 -p 8080:8080 -e TZ=Europe/Moscow -v E:\PRACTICE\DOCKERS\docker\resources:/usr/src/app/resources new
+
+21. Сохраняем изменения в докере через волюмы (тоже не работает) - это чтобы 
+не пропадали данные в базах данных контейнеров, а сохранялись в волюмах и их потом можно
+было использовать в других контейнерах:
+1. Посмотреть, какие есть волюмы:
+docker volume ls
+2. Создать волюме:
+docker volume create web
+3. Запуск с волюмом:
+docker run --rm --name sun3 -p 8080:8080 -v web:/usr/src/app/resources sun
+
+22. Параметр -d в команде docker run позволяет запускать контейнер в фоне
+
+23. Удаление докер image:
+1. docker images
+2. docker rmi sunny
+Or: docker rmi 4b4e19cac487
+
+24. Удаление пустых контейнеров (без тегов - <none>):
+1. docker images -q
+2. docker rmi $(docker images -q) // this run in Shell Script - in Ubuntu or other Linux
+https://stackoverflow.com/questions/42853895/removing-unused-docker-images-on-a-remote-linux-azure-hosted-docker-instance-giv
+
+25. Для работы с многими микросервисами лучше использовать Docker compose:
+1. docker-compose version
+2. Создать файл в корне проекта с докером: docker-compose.yml
+В нем указываем версию, примонтированный волюм, сервисы и для них команды, где запускать, 
+как часто запускать и переменные окружения.
+3. Добавить SSH-ключ 
+в linux shell:
+3.1. ssh-keygen -t rsa
+for Mac: 3.2. cat github.pub | pbcopy
+Это копирует ключ в буфер обмена
+4. Создаем сервер
+5. Создаем файл config без расширения
+6. Поставить докер на Убунту, создать отдельного пользователя, не рут,
+работать под другим пользователем - взять инструкцию с digitalocean и установить
+докер и докер-compose на Убунту. 
+7. Куча работы с гитом...
+Запуск:
+8. docker-compose up -d
+Остановить все контейнеры 
+docker-compose down
+
+Также можно работать через dockerhub с командами docker login, docker build, docker push,
+только тогда файл docker-compose.yml надо поменять - команду build заменить на image
+
+
+sudo
+ssh-keygen
+ssh-copy-id
+Ви18:47
+тебя не слышно
+Mykhailo MOLCHANOV18:51
+Gitlab CI
+Shared Runners
+Mykhailo MOLCHANOV18:52
+dind - Docker in docker
+Mykhailo MOLCHANOV18:54
+rsync
+rsync -av --delete --progress ./* mt@somehost.com:/var/www/somesite
+Mykhailo MOLCHANOV18:55
+ansistrano
+ansible
+Ви18:57
+bare
+Mykhailo MOLCHANOV19:02
+https://docs.gitlab.com/ee/ci/ssh_keys/
+Mykhailo MOLCHANOV19:05
+https://github.com/michael-molchanov/toolbox-php-tools/blob/master/12/7.4/Dockerfile
+docker pull michaeltigr/toolbox-php-tools:7.4-12-0.2.1.8
+https://hub.docker.com/repository/docker/michaeltigr/toolbox-php-tools/tags?page=1&ordering=last_updated&name=-12-
+Mykhailo MOLCHANOV19:13
+docker run -t -w "${PWD}" -v "${PWD}:${PWD}" --entrypoint yarn michaeltigr/toolbox-php-tools:7.4-12-0.2.1.8 install --frozen-lockfile
+
+
+Mykhailo MOLCHANOV18:43
+sudo
+ssh-keygen
+ssh-copy-id
+Ви18:47
+тебя не слышно
+Mykhailo MOLCHANOV18:51
+Gitlab CI
+Shared Runners
+Mykhailo MOLCHANOV18:52
+dind - Docker in docker
+Mykhailo MOLCHANOV18:54
+rsync
+rsync -av --delete --progress ./* mt@somehost.com:/var/www/somesite
+Mykhailo MOLCHANOV18:55
+ansistrano
+ansible
+Ви18:57
+bare
+Mykhailo MOLCHANOV19:02
+https://docs.gitlab.com/ee/ci/ssh_keys/
+Mykhailo MOLCHANOV19:05
+https://github.com/michael-molchanov/toolbox-php-tools/blob/master/12/7.4/Dockerfile
+docker pull michaeltigr/toolbox-php-tools:7.4-12-0.2.1.8
+https://hub.docker.com/repository/docker/michaeltigr/toolbox-php-tools/tags?page=1&ordering=last_updated&name=-12-
+Mykhailo MOLCHANOV19:13
+docker run -t -w "${PWD}" -v "${PWD}:${PWD}" --entrypoint yarn michaeltigr/toolbox-php-tools:7.4-12-0.2.1.8 install --frozen-lockfile
+Mykhailo MOLCHANOV19:19
+https://dou.ua/lenta/articles/top-50-winter-2021/?from=nl&utm_source=20210302&utm_medium=email&utm_campaign=CM
+https://jobs.dou.ua/companies/intellias/
+Mykhailo MOLCHANOV19:23
+https://wego.here.com/?x=ep&map=49.839,24.0191,10,normal
+
+docker-compose
+
+wodby
+
+WSL2 problems
+https://github.com/microsoft/WSL/issues/4166
+
+wsl2 shutdowns
